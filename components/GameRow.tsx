@@ -15,7 +15,7 @@ export default function GameRow({
   console.log(correctLetters);
 
   const baseStyle =
-    "border h-24 w-24 flex items-center justify-center text-4xl uppercase font-black";
+    "border h-20 w-20 flex items-center justify-center text-4xl uppercase font-black";
   const statusStyles = {
     correct: "bg-green-400 text-background",
     present: "bg-yellow-400 text-background",
@@ -40,7 +40,7 @@ export default function GameRow({
   }
 
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-5 gap-2">
       {displayLetters.map((letter, index) => {
         const letterStatus = getLetterStatus(letter, index);
         const extraStyle = statusStyles[letterStatus];

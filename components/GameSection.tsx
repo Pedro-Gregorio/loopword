@@ -43,9 +43,9 @@ export default function GameSection({ word }: { word: string }) {
   }, [gameWon]);
 
   return (
-    <section className="mt-12 mx-auto max-w-4xl">
+    <section className="mt-6 mx-auto max-w-4xl">
       <form
-        className="mt-8 relative"
+        className="mt-4 relative"
         onSubmit={(e: FormEvent<HTMLFormElement>) => validateWord(e)}
       >
         <input
@@ -62,7 +62,7 @@ export default function GameSection({ word }: { word: string }) {
           disabled={gameOver || gameWon}
           type="text"
         />
-        <div className="space-y-4">
+        <div className="space-y-2">
           {/* Past Guesses */}
           {pastGuesses.map((guess, index) => (
             <GameRow
@@ -82,6 +82,19 @@ export default function GameSection({ word }: { word: string }) {
             />
           )}
           {/* Future Guesses */}
+          {Array.from({
+            length:
+              MAX_GUESSES - pastGuesses.length - (gameWon || gameOver ? 0 : 1),
+          }).map((_, index) => {
+            return (
+              <GameRow
+                key={pastGuesses.length + (gameWon || gameOver ? 0 : 1) + index}
+                currentGuess={""}
+                correctWord={word}
+                submittedRow={false}
+              />
+            );
+          })}
         </div>
       </form>
 
