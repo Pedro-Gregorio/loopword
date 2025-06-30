@@ -2,8 +2,12 @@
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import GameRow from "./GameRow";
+import { generate } from "random-words";
 
-export default function GameSection({ word }: { word: string }) {
+export default function GameSection() {
+  const [secretWord, setSecretWord] = useState<string>(
+    () => generate({ exactly: 1, minLength: 5, maxLength: 5 })[0]
+  );
   const [currentGuess, setCurrentGuess] = useState<string>("");
   const [pastGuesses, setPastGuesses] = useState<string[]>([]);
   const [gameWon, setGameWon] = useState<boolean>(false);
@@ -20,7 +24,7 @@ export default function GameSection({ word }: { word: string }) {
     const newPastGuesses = [...pastGuesses, currentGuess];
     setPastGuesses(newPastGuesses);
 
-    if (currentGuess === word) {
+    if (currentGuess === secretWord) {
       setGameWon(true);
     } else if (newPastGuesses.length >= MAX_GUESSES) {
       setGameOver(true);
@@ -34,6 +38,9 @@ export default function GameSection({ word }: { word: string }) {
     setPastGuesses([]);
     setGameWon(false);
     setGameOver(false);
+    setSecretWord(
+      () => generate({ exactly: 1, minLength: 5, maxLength: 5 })[0]
+    );
   }
 
   useEffect(() => {
@@ -68,7 +75,7 @@ export default function GameSection({ word }: { word: string }) {
             <GameRow
               key={index}
               currentGuess={guess}
-              correctWord={word}
+              correctWord={secretWord}
               submittedRow={true}
             />
           ))}
@@ -77,8 +84,9 @@ export default function GameSection({ word }: { word: string }) {
             <GameRow
               key={pastGuesses.length}
               currentGuess={currentGuess}
-              correctWord={word}
+              correctWord={secretWord}
               submittedRow={false}
+              currentRow={true}
             />
           )}
           {/* Future Guesses */}
@@ -90,7 +98,7 @@ export default function GameSection({ word }: { word: string }) {
               <GameRow
                 key={pastGuesses.length + (gameWon || gameOver ? 0 : 1) + index}
                 currentGuess={""}
-                correctWord={word}
+                correctWord={secretWord}
                 submittedRow={false}
               />
             );
@@ -103,7 +111,9 @@ export default function GameSection({ word }: { word: string }) {
           <h2 className="text-xl font-bold">
             {gameWon
               ? "You found the right word! 🥳"
-              : `Game Over! The word was ${word.toUpperCase()} 😢`}
+              : `Game Over! The word was ${secretWord
+                  .toString()
+                  .toUpperCase()} 😢`}
           </h2>
           <button
             onClick={resetGame}

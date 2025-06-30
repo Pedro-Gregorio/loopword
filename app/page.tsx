@@ -4,13 +4,13 @@ import GameSection from "@/components/GameSection";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <main className="flex flex-col items-center">
-        <h1 className="pt-12 text-4xl font-black">LoopWord</h1>
+      <main className="flex-1 flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-black">LoopWord</h1>
         <p className="mt-2 text-sm">
           It&apos;s like Wordle, but you can play{" "}
           <span className="font-bold italic">forever</span>.
         </p>
-        <GameSection word="party" />
+        <GameSection />
       </main>
       <footer className="py-6 md:py-12 border-t border-gray-700 max-md:text-center">
         <div className="px-12 md:px-24 flex flex-col items-center space-y-6 md:flex-row md:justify-between md:items-start md:space-y-0">
@@ -28,8 +28,8 @@ export default function Home() {
               ❤️
             </p>
           </div>
-          <div className="flex flex-col space-y-2">
-            <p className="text-sm">Other projects</p>
+          <div className="flex flex-col space-y-2 md:text-right">
+            <p className="text-sm">Other projects by me:</p>
             <ExternalLink href="https://loopcost.app" text="LoopCost" />
             <ExternalLink href="https://tubemod.dev" text="TubeMod" />
           </div>
