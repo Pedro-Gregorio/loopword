@@ -15,7 +15,7 @@ export default function GameRow({
   console.log(correctLetters);
 
   const baseStyle =
-    "border h-20 w-20 flex items-center justify-center text-4xl uppercase font-black";
+    "border h-15 w-15 md:h-20 md:w-20 flex items-center justify-center text-4xl uppercase font-black";
   const statusStyles = {
     correct: "bg-green-400 text-background",
     present: "bg-yellow-400 text-background",
