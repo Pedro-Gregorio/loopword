@@ -51,8 +51,6 @@ export default function GameSection() {
     }
   }, [gameWon]);
 
-  console.log(pastGuesses)
-
   return (
     <section className="mt-6 mx-auto max-w-4xl">
       <form

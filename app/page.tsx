@@ -30,8 +30,8 @@ export default function Home() {
           </div>
           <div className="flex flex-col space-y-2 md:text-right">
             <p className="text-sm">Other projects by me:</p>
-            <ExternalLink href="https://loopcost.app" text="LoopCost" />
-            <ExternalLink href="https://tubemod.dev" text="TubeMod" />
+            <ExternalLink href="https://loopcost.app?ref=loopword" text="LoopCost" />
+            <ExternalLink href="https://tubemod.dev?ref=loopword" text="TubeMod" />
           </div>
         </div>
       </footer>
