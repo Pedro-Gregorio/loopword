@@ -18,6 +18,12 @@ export default function GameSection() {
   const MAX_GUESSES = 6;
   const inputRef = useRef<HTMLInputElement>(null);
 
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    const inputValue = e.currentTarget.value;
+    const filteredValue = inputValue.replace(/[^a-zA-Z]/g, '');
+    setCurrentGuess(filteredValue);
+  }
+
   function validateWord(e: FormEvent) {
     e.preventDefault();
 
@@ -61,13 +67,12 @@ export default function GameSection() {
           autoFocus
           ref={inputRef}
           className="absolute top-0 right-0 w-full h-full opacity-0 cursor-default"
+          minLength={5}
           maxLength={5}
           required
           tabIndex={0}
-          pattern="[A-Za-z]*"
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setCurrentGuess(e.currentTarget.value)
-          }
+          pattern="^[a-zA-Z]*$"
+          onChange={handleInputChange}
           value={currentGuess}
           disabled={gameOver || gameWon}
           type="text"
