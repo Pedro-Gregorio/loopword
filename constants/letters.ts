@@ -1,0 +1,1 @@
+export const QWERTY = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];

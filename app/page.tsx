@@ -4,7 +4,7 @@ import GameSection from "@/components/GameSection";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <main className="flex-1 flex flex-col items-center justify-center">
+      <main className="flex-1 flex flex-col items-center justify-center max-md:min-h-screen py-12">
         <h1 className="text-4xl font-black">LoopWord</h1>
         <p className="mt-2 text-sm">
           It&apos;s like Wordle, but you can play{" "}
