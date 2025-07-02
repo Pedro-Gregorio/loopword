@@ -24,8 +24,10 @@ export default function GameSection() {
     setCurrentGuess(filteredValue);
   }
 
-  function validateWord(e: FormEvent) {
-    e.preventDefault();
+  function validateWord(e?: FormEvent) {
+    if (e) e.preventDefault();
+
+    if (currentGuess.length !== 5) return;
 
     if (gameOver || gameWon) return;
 
@@ -77,6 +79,7 @@ export default function GameSection() {
           value={currentGuess}
           disabled={gameOver || gameWon}
           type="text"
+          autoComplete="off"
         />
         <div className="space-y-2">
           {/* Past Guesses */}
@@ -115,8 +118,11 @@ export default function GameSection() {
         </div>
         <div className="mt-4 max-w-sm mx-auto flex flex-col space-y-2">
           {ROWS.map((row) => (
-            <div key={row} className="flex items-center justify-center gap-2">
-              {row.split("").map((letter) => (
+            <div
+              key={row[0]}
+              className="flex items-center justify-center gap-2"
+            >
+              {row.map((letter) => (
                 <button
                   key={letter}
                   type="button"
@@ -124,11 +130,23 @@ export default function GameSection() {
                     letter,
                     pastGuesses,
                     secretWord
-                  )}`}
+                  )} hover:scale-105 transition ease-in duration-200`}
                   onClick={() => {
-                    setCurrentGuess((prevGuess) => {
-                      return prevGuess.concat(letter);
-                    });
+                    if (letter === "delete") {
+                      if (currentGuess !== "") {
+                        setCurrentGuess((prevGuess) => {
+                          return prevGuess.substring(0, prevGuess.length - 1);
+                        });
+                      }
+                    } else if (letter === "enter") {
+                      validateWord();
+                    } else {
+                      if (currentGuess.length < 6) {
+                        setCurrentGuess((prevGuess) => {
+                          return prevGuess.concat(letter);
+                        });
+                      }
+                    }
                     inputRef.current!.focus();
                   }}
                 >
