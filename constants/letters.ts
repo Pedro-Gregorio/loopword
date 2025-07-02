@@ -1,1 +1,1 @@
-export const QWERTY = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+export const ROWS = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
