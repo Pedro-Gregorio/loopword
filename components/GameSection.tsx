@@ -69,7 +69,7 @@ export default function GameSection() {
           id="guess"
           autoFocus
           ref={inputRef}
-          className="absolute top-0 right-0 opacity-0 cursor-default"
+          className="max-md:hidden w-full md:h-130 absolute top-0 right-0 opacity-0 cursor-default"
           minLength={5}
           maxLength={5}
           required
@@ -81,7 +81,7 @@ export default function GameSection() {
           type="text"
           autoComplete="off"
         />
-        <div className="space-y-2">
+        <div className="space-y-2 flex flex-col items-center">
           {/* Past Guesses */}
           {pastGuesses.map((guess, index) => (
             <GameRow
@@ -116,7 +116,7 @@ export default function GameSection() {
             );
           })}
         </div>
-        <div className="mt-4 max-w-sm mx-auto flex flex-col space-y-2">
+        <div className="mt-4 max-w-fit mx-auto flex flex-col space-y-2">
           {ROWS.map((row) => (
             <div
               key={row[0]}
