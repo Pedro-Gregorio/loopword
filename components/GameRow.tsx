@@ -7,24 +7,23 @@ export default function GameRow({
   currentGuess: string;
   correctWord: string;
   submittedRow: boolean;
-  currentRow?: boolean
+  currentRow?: boolean;
 }) {
   const displayLetters = Array.from(
     { length: 5 },
     (_, i) => currentGuess[i] || ""
   );
-  const correctLetters = correctWord.split("");
 
   const baseStyle =
     "border border-gray-700 h-15 w-15 md:h-20 md:w-20 flex items-center justify-center text-4xl uppercase font-black";
-  
-    const statusStyles = {
+
+  const statusStyles = {
     correct: "bg-green-400 text-background",
     present: "bg-yellow-400 text-background",
     absent: "bg-gray-400 text-background",
     default: "bg-transparent text-foreground",
   };
-  
+
   const currentRowStyles = "border-white";
 
   function getLetterStatus(letter: string, index: number) {
@@ -32,15 +31,38 @@ export default function GameRow({
       return "default";
     }
 
-    if (letter === correctLetters[index]) {
-      return "correct";
+    const statuses: ("correct" | "present" | "absent")[] = Array(
+      displayLetters.length
+    ).fill("absent");
+
+    const correctLettersArray = correctWord.split("");
+    const guessLettersArray = currentGuess.split("");
+
+    const availableCorrectLetters = [...correctLettersArray];
+
+    for (let i = 0; i < displayLetters.length; i++) {
+      if (guessLettersArray[i] === availableCorrectLetters[i]) {
+        statuses[i] = "correct";
+        availableCorrectLetters[i] = "";
+      }
     }
 
-    if (correctLetters.includes(letter)) {
-      return "present";
+    for (let i = 0; i < displayLetters.length; i++) {
+      if (statuses[i] === "correct") {
+        continue;
+      }
+
+      const currentGuessedLetter = guessLettersArray[i];
+      const indexOfPresent =
+        availableCorrectLetters.indexOf(currentGuessedLetter);
+
+      if (indexOfPresent !== -1) {
+        statuses[i] = "present";
+        availableCorrectLetters[indexOfPresent] = "";
+      }
     }
 
-    return "absent";
+    return statuses[index];
   }
 
   return (
@@ -49,7 +71,12 @@ export default function GameRow({
         const letterStatus = getLetterStatus(letter, index);
         const extraStyle = statusStyles[letterStatus];
         return (
-          <div key={index} className={`${baseStyle} ${extraStyle} ${currentRow && currentRowStyles}`}>
+          <div
+            key={index}
+            className={`${baseStyle} ${extraStyle} ${
+              currentRow && currentRowStyles
+            }`}
+          >
             {letter}
           </div>
         );
