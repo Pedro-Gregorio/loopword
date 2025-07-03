@@ -17,9 +17,6 @@ export default function Home() {
           <div className="flex flex-col space-y-2">
             <p className="font-bold">LoopWord</p>
             <p className="text-sm">
-              Copyright &copy; 2025 - All Rights Reserved
-            </p>
-            <p className="text-sm">
               Made with love and curiosity by{" "}
               <ExternalLink
                 href="https://pedrogregor.io"
@@ -27,11 +24,24 @@ export default function Home() {
               />{" "}
               ❤️
             </p>
+            <p className="text-sm">
+              Want the sauce?{" "}
+              <ExternalLink
+                href="https://github.com/Pedro-Gregorio/loopword"
+                text="GitHub"
+              />
+            </p>
           </div>
           <div className="flex flex-col space-y-2 md:text-right">
             <p className="text-sm">Other projects by me:</p>
-            <ExternalLink href="https://loopcost.app?ref=loopword" text="LoopCost" />
-            <ExternalLink href="https://tubemod.dev?ref=loopword" text="TubeMod" />
+            <ExternalLink
+              href="https://loopcost.app?ref=loopword"
+              text="LoopCost"
+            />
+            <ExternalLink
+              href="https://tubemod.dev?ref=loopword"
+              text="TubeMod"
+            />
           </div>
         </div>
       </footer>
