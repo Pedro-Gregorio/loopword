@@ -14,6 +14,7 @@ export default function GameSection() {
   const [pastGuesses, setPastGuesses] = useState<string[]>([]);
   const [gameWon, setGameWon] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [streakCount, setStreakCount] = useState<number>(0);
 
   const MAX_GUESSES = 6;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,12 +45,20 @@ export default function GameSection() {
   }
 
   function resetGame() {
+    if (gameWon) {
+      setStreakCount((prevStreakCount) => {
+        return prevStreakCount + 1;
+      });
+    } else {
+      setStreakCount(0);
+    }
+    console.log("Updated streak count ", streakCount);
     setCurrentGuess("");
     setPastGuesses([]);
     setGameWon(false);
     setGameOver(false);
-    setSecretWord(
-      () => generate({ exactly: 1, minLength: 5, maxLength: 5 })[0]
+    setSecretWord(() =>
+      generate({ exactly: 1, minLength: 5, maxLength: 5 })[0].toLowerCase()
     );
   }
 
@@ -61,8 +70,13 @@ export default function GameSection() {
 
   return (
     <section className="mt-6 mx-auto max-w-4xl">
+      {streakCount > 0 && (
+        <p className="text-center font-semibold">
+          You are currently on a {streakCount} game streak! Keep going!
+        </p>
+      )}
       <form
-        className="mt-4 relative"
+        className="mt-6 relative"
         onSubmit={(e: FormEvent<HTMLFormElement>) => validateWord(e)}
       >
         <input
@@ -143,7 +157,7 @@ export default function GameSection() {
                     } else {
                       if (currentGuess.length < 6) {
                         setCurrentGuess((prevGuess) => {
-                          return prevGuess.concat(letter);
+                          return prevGuess.concat(letter.toLowerCase());
                         });
                       }
                     }
@@ -167,6 +181,11 @@ export default function GameSection() {
                   .toString()
                   .toUpperCase()} 😢`}
           </h2>
+          {streakCount > 0 && gameOver && (
+            <p className="mt-4">
+              There goes your streak! But you can always try again!
+            </p>
+          )}
           <button
             onClick={resetGame}
             className="cursor-pointer mt-4 border rounded-lg px-2 md:px-4 py-1 md:py-2 hover:bg-foreground/20 transition duration-300 ease-in"
